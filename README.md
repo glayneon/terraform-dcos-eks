@@ -7,7 +7,12 @@ General aws eks deploy using Terraform
 ## Notice
 This Module is origined from 'Terraform-msf-eks' module in Terraform Registry.
 
-I Added new variables and local variables for comprising name convension for my division AIOPS.
+And I Added new variables and local variables for comprising name convension for my division AIOPS like below.
+- Keypair definition and variable
+- Name convension for AIOPS division so that we can easily notice our resources made by Terraform in AWS.
+- I changed the Available Zone list can be generated automately.
+- I upgrade k8s version and check out the userdata for k8s 1.14
+
 
 
 ## for more info
