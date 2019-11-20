@@ -46,7 +46,6 @@ data "aws_ami" "bastion" {
   }
 }
 
-
 data "aws_ami" "eks-worker-ami" {
   filter {
     name   = "name"

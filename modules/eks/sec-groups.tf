@@ -2,7 +2,6 @@
 
 # CLUSTER SECURITY GROUPS
 
-
 module "cluster-sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.0.1"
@@ -79,7 +78,8 @@ module "ssh_sg" {
   description = "Security group which is to allow SSH from Bastion"
   vpc_id      = data.aws_vpc.eks.id
 
-  ingress_cidr_blocks = ["196.192.165.10/32"]
+  #ingress_cidr_blocks = [local.workstation-external-cidr]
+  ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["ssh-tcp"]
   egress_cidr_blocks  = ["0.0.0.0/0"]
   egress_rules        = ["all-all"]

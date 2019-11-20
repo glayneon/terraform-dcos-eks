@@ -6,9 +6,9 @@ variable "ec2-key" {}
 module "bastion-asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 3.0"
-  name    = "bastion-asg"
+  name    = "dcos-eks-bastion-asg"
 
-  lc_name = "bastion-lc"
+  lc_name = "dcos-eks-bastion-lc"
 
   image_id                     = data.aws_ami.bastion.id
   instance_type                = "t2.small"

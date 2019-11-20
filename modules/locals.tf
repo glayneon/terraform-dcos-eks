@@ -1,7 +1,7 @@
 
 locals {
   standard_tags = {
-    Component   = "user-service"
-    Environment = "production"
+    Component   = "local."
+    Environment = "prod"
   }
 }

@@ -1,26 +1,18 @@
-# terraform-eks-msf
+# terraform-dcos-eks
 
-
-[![TerraformRefigistry](https://img.shields.io/badge/Terraform%20Registry-v1.0.3-blue.svg)](https://registry.terraform.io/modules/mbiomee/eks/msf/)
 
 
 General aws eks deploy using Terraform
 ---
+## Notice
+This Module is origined from 'Terraform-msf-eks' module in Terraform Registry.
+
+I Added new variables and local variables for comprising name convension for my division AIOPS.
+
 
 ## for more info
 - [Amazon Elastic Kubernetes Service](https://aws.amazon.com/eks/)
 - [Terraform](https://www.terraform.io/)
-
-## Caution
-applying this infrastructure will create resources on your aws account so be sure you have enough credits
-to see resources [click here](https://registry.terraform.io/modules/mbiomee/eks/msf/?tab=resources)
-  
-## Prerequisites
-
-1. aws account
-2. IAM role with AdminstratorAccess policy
-3. machine with aws cli, terraform cli, kubectl installed
-4. create ssh key and upload the public key to your EC2 region
 
 
 ## Usage
@@ -28,25 +20,28 @@ to see resources [click here](https://registry.terraform.io/modules/mbiomee/eks/
 create main.tf file and pass your variables link example
 ```terraform
 module "eks" {
-  source              = "mbiomee/eks/msf"
-  aws-region          = "us-east-1"
-  availability-zones  = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  cluster-name        = "msf-cluster"
-  k8s-version         = "1.13"
-  node-instance-type  = "t3.medium"
-  root-block-size     = "40"
-  desired-capacity    = "3"
-  max-size            = "5"
-  min-size            = "1"
-  public-min-size     = "1"
-  public-max-size     = "1"
-  public-desired-capacity = "1"
-  vpc-subnet-cidr     = "10.0.0.0/16"
-  private-subnet-cidr = ["10.0.0.0/19", "10.0.32.0/19", "10.0.64.0/19"]
-  public-subnet-cidr  = ["10.0.128.0/20", "10.0.144.0/20", "10.0.160.0/20"]
-  db-subnet-cidr      = ["10.0.192.0/21", "10.0.200.0/21", "10.0.208.0/21"]
-  eks-cw-logging      = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  ec2-key             = "my-key"
+  source              = "git::https://github.com/glayneon/terraform-dcos-eks"
+  aws-region          = var.aws-region
+  availability-zones  = local.azs
+  cluster-name        = local.cluster-name
+  k8s-version         = var.k8s-version
+  node-instance-type  = var.node-instance-type
+  root-block-size     = var.root-bock-size
+  desired-capacity   = var.desired-capacity
+  max-size           = var.max-size
+  min-size           = var.min-size
+  # The below lines is an option for worker nodes on Public subnets
+  public-desired-capacity = var.public-desired-capacity
+  public-max-size         = var.public-max-size
+  public-min-size         = var.public-min-size
+  vpc-subnet-cidr     = var.vpc-subnet-cidr
+  private-subnet-cidr = var.private-subnet-cidr
+  public-subnet-cidr  = var.public-subnet-cidr
+  eks-cw-logging = var.eks-cw-logging
+  ec2-key        = var.ec2-key
+  ## If you need an IP range for accessing your Bastion, Uncomment the below line and
+  ## Add the variable 'bastion-ingress-range' in variable.tf
+  # bastion-ingress-range = var.bastion-ingress-range
 }
 
 output "kubeconfig" {
@@ -57,32 +52,6 @@ output "config-map" {
   value = module.eks.config-map
 }
 
-```
-
-**Or** by using variables.tf or a tfvars file:
-
-```terraform
-module "eks" {
-  source              = "mbiomee/eks/msf"
-  aws-region          = var.aws-region
-  availability-zones  = var.availability-zones
-  cluster-name        = var.cluster-name
-  k8s-version         = var.k8s-version
-  node-instance-type  = var.node-instance-type
-  root-block-size     = var.root-block-size
-  desired-capacity    = var.desired-capacity
-  max-size            = var.max-size
-  min-size            = var.min-size
-  public-min-size     = var.public-min-size
-  public-max-size     = var.public-max-size
-  public-desired-capacity = var.public-desired-capacity
-  vpc-subnet-cidr     = var.vpc-subnet-cidr
-  private-subnet-cidr = var.private-subnet-cidr
-  public-subnet-cidr  = var.public-subnet-cidr
-  db-subnet-cidr      = var.db-subnet-cidr
-  eks-cw-logging      = var.eks-cw-logging
-  ec2-key             = var.ec2-key
-}
 ```
 
 ### Terraform
