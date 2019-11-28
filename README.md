@@ -1,4 +1,4 @@
-# terraform-dcos-eks
+# tf-eks-aws
 
 
 
