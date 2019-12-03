@@ -11,7 +11,7 @@ variable "name-project" {
 
 variable "aws-env" {
   description = "the AWS environment"
-  default     = "test"
+  default     = "prod"
 }
 
 variable "name-prefix" {
