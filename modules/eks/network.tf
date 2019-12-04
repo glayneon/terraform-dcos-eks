@@ -1,6 +1,6 @@
 ### VPC
 variable "availability-zones" {}
-variable "private-subnet-cidr" {}
+#variable "private-subnet-cidr" {}
 variable "public-subnet-cidr" {}
 #variable "db-subnet-cidr" {}
 
@@ -13,7 +13,7 @@ module "vpc" {
   cidr = var.vpc-subnet-cidr
 
   azs             = var.availability-zones
-  private_subnets = var.private-subnet-cidr
+#  private_subnets = var.private-subnet-cidr
   public_subnets  = var.public-subnet-cidr
   #  database_subnets = var.db-subnet-cidr
 
@@ -21,7 +21,7 @@ module "vpc" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-  enable_nat_gateway = true
+  enable_nat_gateway = false
 
   tags = {
     Name                                        = "${var.cluster-name}-vpc"
@@ -33,11 +33,11 @@ module "vpc" {
     "kubernetes.io/cluster/${var.cluster-name}" = "shared"
     "kubernetes.io/role/elb"                    = 1
   }
-  private_subnet_tags = {
-    Name                                        = "${var.cluster-name}-eks-private"
-    "kubernetes.io/cluster/${var.cluster-name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = 1
-  }
+#  private_subnet_tags = {
+#    Name                                        = "${var.cluster-name}-eks-private"
+#    "kubernetes.io/cluster/${var.cluster-name}" = "shared"
+#    "kubernetes.io/role/internal-elb"           = 1
+#  }
   #  database_subnet_tags = {
   #    Name = "${var.cluster-name}-eks-db"
   #  }

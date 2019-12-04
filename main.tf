@@ -15,9 +15,9 @@ module "eks" {
   public-desired-capacity = var.public-desired-capacity
   public-max-size         = var.public-max-size
   public-min-size         = var.public-min-size
-  vpc-subnet-cidr     = var.vpc-subnet-cidr
-  private-subnet-cidr = var.private-subnet-cidr
-  public-subnet-cidr  = var.public-subnet-cidr
+  vpc-subnet-cidr     = data.aws_vpc.prod-eks.cidr_block
+  #private-subnet-cidr = var.private-subnet-cidr
+  public-subnet-cidr  = data.aws_subnet_ids.pub-subnets.ids
   # And The below line is for DB subnets
   #  db-subnet-cidr          = var.db-subnet-cidr
   eks-cw-logging = var.eks-cw-logging
