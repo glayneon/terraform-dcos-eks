@@ -11,10 +11,10 @@ module "eks" {
   desired-capacity   = var.desired-capacity
   max-size           = var.max-size
   min-size           = var.min-size
-  # The below lines is an option for worker nodes on Public subnets
-  public-desired-capacity = var.public-desired-capacity
-  public-max-size         = var.public-max-size
-  public-min-size         = var.public-min-size
+# The below lines is an option for worker nodes on Public subnets
+#  public-desired-capacity = var.public-desired-capacity
+#  public-max-size         = var.public-max-size
+#  public-min-size         = var.public-min-size
   vpc-subnet-cidr     = var.vpc-subnet-cidr
   private-subnet-cidr = var.private-subnet-cidr
   public-subnet-cidr  = var.public-subnet-cidr

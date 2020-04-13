@@ -1,6 +1,7 @@
 # EKS Worker Nodes Resources
 
 variable "k8s-version" {}
+variable "ec2-key" {}
 
 variable node-instance-type {}
 variable "root-block-size" {}

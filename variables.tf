@@ -1,8 +1,5 @@
 # Variables Configuration
 
-# data from AWS AZs
-data "aws_availability_zones" "available" {}
-
 # Project Name Prefix and sufix variables from Chase
 variable "name-project" {
   description = "the name for this project"
@@ -11,7 +8,7 @@ variable "name-project" {
 
 variable "aws-env" {
   description = "the AWS environment"
-  default     = "prod"
+  default     = "test"
 }
 
 variable "name-prefix" {
@@ -30,6 +27,11 @@ variable "aws-region" {
   description = "The AWS Region to deploy EKS"
 }
 
+#resource "random_string" "postfix" {
+#  length  = 8
+#  special = false
+#}
+
 # In this case, You can choose your desired AZ
 #variable "availability-zones" {
 #  default     = ["ap-northeast-2a", "ap-northeast-2b", "ap-northeast-2c"]
@@ -44,19 +46,20 @@ variable "k8s-version" {
 }
 
 variable "vpc-subnet-cidr" {
-  default     = "10.8.0.0/16"
+  default     = "10.241.0.0/16"
   type        = string
   description = "The VPC Subnet CIDR"
 }
 
 variable "private-subnet-cidr" {
-  default     = ["10.8.0.0/19", "10.8.32.0/19", "10.8.64.0/19"]
+  default     = ["10.241.0.0/19", "10.241.32.0/19", "10.241.64.0/19"]
   type        = list
   description = "Private Subnet CIDR"
 }
 
 variable "public-subnet-cidr" {
-  default     = ["10.8.128.0/20", "10.8.144.0/20", "10.8.160.0/20"]
+  default     = ["10.241.128.0/20", "10.241.144.0/20", "10.241.160.0/20"]
+  #default     = ["10.8.128.0/20"]
   type        = list
   description = "Public Subnet CIDR"
 }
@@ -68,7 +71,7 @@ variable "eks-cw-logging" {
 }
 
 variable "node-instance-type" {
-  default     = "m4.large"
+  default     = "t2.large"
   type        = string
   description = "Worker Node EC2 instance type"
 }
@@ -123,8 +126,11 @@ variable "ec2-key" {
 
 # It's local values for name-convension
 locals {
-  fullname     = "${var.name-prefix}-${var.name-project}-${var.aws-env}"
+#  fullname     = "${var.name-prefix}-${var.aws-env}-${var.name-project}-1"
+  vpc-name = "${var.name-owner}-${var.name-project}-${var.aws-env}2"
+  fullname = "${var.name-owner}-${var.name-project}-${var.aws-env}2"
   prefix-name  = "${local.fullname}"
   cluster-name = "${local.fullname}"
-  azs          = data.aws_availability_zones.available.names
+  azs          = data.aws_availability_zones.az.names
+#vpc-id       = data.aws_vpc.prod-eks.id
 }

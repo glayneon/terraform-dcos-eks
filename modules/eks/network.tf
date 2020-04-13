@@ -15,9 +15,9 @@ module "vpc" {
   azs             = var.availability-zones
   private_subnets = var.private-subnet-cidr
   public_subnets  = var.public-subnet-cidr
-  #  database_subnets = var.db-subnet-cidr
+#  database_subnets = var.db-subnet-cidr
 
-  #  create_database_subnet_group = true
+#  create_database_subnet_group = true
 
   enable_dns_hostnames = true
   enable_dns_support   = true
